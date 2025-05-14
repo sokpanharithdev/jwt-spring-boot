@@ -1,6 +1,6 @@
 package com.crud.crud.config;
 
-import com.crud.crud.dto.UserDto;
+import com.crud.crud.dto.UserRequest;
 import com.crud.crud.repository.UserRepository;
 import com.crud.crud.service.UserService;
 import jakarta.annotation.PostConstruct;
@@ -23,7 +23,7 @@ public class UserInit {
     final var user = this.userRepository.findByEmail("admin@gmail.com");
     if (user.isEmpty()) {
       this.userService.save(
-          UserDto.builder().name("admin").email("admin@gmail.com").password("123").build());
+          UserRequest.builder().name("admin").email("admin@gmail.com").password("123").build());
     }
   }
 }

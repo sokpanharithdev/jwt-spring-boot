@@ -48,7 +48,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE3NDcyNDU1MjQsImV4cCI6MTc0NzI4MTUyNH0.qqm4ZWDMG5zS06EOl-37y_dltlUqezsI7JAy_G4WiwA",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE3NDcyNDYyNTIsImV4cCI6MTc0NzI4MjI1Mn0.pTbiAII88DIXWB7KCg-Zn4sRDu7sECG7hmjLu313zZg",
 							"type": "string"
 						}
 					]
@@ -97,7 +97,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"id\": 7,\r\n    \"name\": \"Sok Panharith\",\r\n    \"email\": \"admin1@gmail.com\",\r\n    \"password\": \"123\"\r\n}",
+					"raw": "{\r\n    \"id\": 9,\r\n    \"name\": \"Dara\",\r\n    \"email\": \"admin2@gmail.com\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"

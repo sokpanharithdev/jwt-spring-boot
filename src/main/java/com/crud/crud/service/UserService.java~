@@ -2,6 +2,7 @@ package com.crud.crud.service;
 
 import com.crud.crud.dto.PaginationResponses;
 import com.crud.crud.dto.UserDto;
+import com.crud.crud.dto.UserRequest;
 import com.crud.crud.exception.BadRequestException;
 import com.crud.crud.exception.EntityNotFoundException;
 import com.crud.crud.model.User;
@@ -20,22 +21,19 @@ public class UserService {
   private final UserRepository userRepository;
   private final PasswordEncoder passwordEncoder;
 
-  public UserDto save(UserDto userDto) {
+  public UserDto save(UserRequest request) {
+    final var existUser = this.userRepository.findByEmail(request.getEmail());
     if (existUser.isPresent()) {
       throw new BadRequestException("User with this email already exist.");
     }
-    final var user = this.modelMapper.map(userDto, User.class);
-    user.setPassword(this.passwordEncoder.encode(userDto.getPassword()));
+    final var user = this.modelMapper.map(request, User.class);
+    user.setPassword(this.passwordEncoder.encode(request.getPassword()));
     final var savedUser = this.userRepository.save(user);
     return this.modelMapper.map(savedUser, UserDto.class);
   }
 
   public UserDto getUserById(Long id) {
-    final var user =
-        this.userRepository
-            .findById(id)
-            .orElseThrow(() -> new EntityNotFoundException("User not found."));
-    return this.modelMapper.map(user, UserDto.class);
+    return this.modelMapper.map(this.findEntityById(id), UserDto.class);
   }
 
   public void delete(Long id) {
@@ -44,9 +42,10 @@ public class UserService {
   }
 
   public UserDto update(UserDto userDto) {
-    final var user = this.getUserById(userDto.getId());
-    this.modelMapper.map(userDto, user);
-    final var updatedUser = this.userRepository.save(this.modelMapper.map(user, User.class));
+    final var foundUser = this.findEntityById(userDto.getId());
+    this.modelMapper.map(userDto, foundUser);
+
+    final var updatedUser = this.userRepository.save();
     return this.modelMapper.map(updatedUser, UserDto.class);
   }
 
@@ -57,5 +56,11 @@ public class UserService {
             .map((User user) -> this.modelMapper.map(user, UserDto.class))
             .toList();
     return PaginationUtils.buildPaginationResponse(userPage, userContent);
+  }
+
+  private User findEntityById(Long id) {
+    return this.userRepository
+        .findById(id)
+        .orElseThrow(() -> new EntityNotFoundException("User not found."));
   }
 }
