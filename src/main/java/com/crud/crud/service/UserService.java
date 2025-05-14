@@ -22,7 +22,7 @@ public class UserService {
 
   public UserDto save(UserDto userDto) {
     final var existUser = this.userRepository.findByEmail(userDto.getEmail());
-    if (existUser.isPresent() && !existUser.get().getEmail().equals("admin@gmail.com")) {
+    if (existUser.isPresent()) {
       throw new BadRequestException("User with this email already exist.");
     }
     final var user = this.modelMapper.map(userDto, User.class);

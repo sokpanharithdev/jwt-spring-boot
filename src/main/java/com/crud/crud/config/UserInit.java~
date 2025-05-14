@@ -12,18 +12,15 @@ public class UserInit {
   private final UserService userService;
   private final UserRepository userRepository;
 
-  public UserInit(UserService userService, UserRepository userRepository) {
+  public UserInit(UserService userService) {
     this.userService = userService;
-    this.userRepository = userRepository;
   }
 
   @Transactional(rollbackFor = Exception.class)
   @PostConstruct
   public void initSuperAdmin() {
-    final var user = this.userRepository.findByEmail("admin@gmail.com");
-    if (user.isEmpty()) {
-      this.userService.save(
-          UserDto.builder().name("admin").email("admin@gmail.com").password("123").build());
-    }
+
+    this.userService.save(
+        UserDto.builder().name("admin").email("admin@gmail.com").password("123").build());
   }
 }
